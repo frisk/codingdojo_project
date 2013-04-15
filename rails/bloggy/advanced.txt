@@ -1,0 +1,59 @@
+
+Create appropriate models
+
+# create user model
+rails generate model User first_name: string last_name: string email_address: string  
+
+#create owners model
+rails generate Owner user: references blog: references 
+
+Create appropriate validations (think about what fields you would need to require, what other validation rules you would need)
+
+validates :email_address, :first_name, :last_name, :presence => true
+VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i 
+validates :email_address, format: { with: VALID_EMAIL_REGEX }
+
+Using the console
+Be able to create 5 users
+
+# this would be repeated with 4 other different user names
+User.create(:first_name => "Michael", :last_name => "Wade", :email_address => "wadem@calpoly.edu").errors.full_messages
+
+Be able to create 5 blogs
+
+# this would be repeated with 4 other blog entries
+User.create(:name => "Biochemistry", :description => "The way of the force in the lab").errors.full_messages
+
+
+To add the first user to the last blog, you would do the following: User.first.blogs = [Blog.last].  To add both the first and the last blog to the first user, you would do User.first.blogs = [Blog.first, Blog.last].  What would you do to add the second and third user to the second blog?
+
+# make sure that the relationship is setup correctly for each
+# of the models.
+
+has_many :users, :through => :owners
+has_many :blogs, :through => :owners
+
+# then run the following command
+
+Blog.find(2).users = [User.find(2), User.find(3)]
+
+Be able to create posts written by the first user
+
+User.first.posts.create(:title => "user1 test", :content => "this is a test post", :blog_id => 15).errors.full_messages
+
+Be able to create messages written by the second user
+
+User.find(2).messages.create(:author => "a different author", :message => "A new message that is written by a different author", :post_id => 27, :user_id => 2).errors.full_messages
+
+Be able to retrieve all messages from any specific post
+
+Post.find(27).messages.all
+
+Be able to retrieve all the users that "own" any specific blog 
+
+Blog.find(2).users.all
+
+
+
+
+

@@ -1,0 +1,32 @@
+*{
+    font-family:Arial, Verdana;
+}
+#login, #registration{
+    border: 1px solid;
+    width: 200px;
+    margin: 10px
+}
+#login form, #registration form{
+    margin: 10px;
+}
+label, input{
+    display:block;
+    text-align:left;
+}
+input[type="submit"]{
+    margin: 10px
+}
+div.error{
+    color: red;
+    margin:5px 5px;
+}
+div.success{
+    color: blue;
+    margin:5px 5px;
+}
+div#user_info{
+    border: 1px solid;
+    width: 400px;
+    padding-left:20px;
+    padding-bottom: 20px;
+}

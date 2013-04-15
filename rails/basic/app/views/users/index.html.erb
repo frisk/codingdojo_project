@@ -1,0 +1,15 @@
+<h1>Users#index</h1>
+<p>Find me in app/views/users/index.html.erb</p>
+<% @users.each do |user| %>
+<% @user_count += 1 %>
+<h2>User <%= @user_count %></h2>
+<p>First Name: <%= user.first_name %></p>
+<p>Last Name: <%= user.last_name %></p>
+<p>Email: <%= user.email_address %></p>
+<a href="/users/<%= user.id %>">Show</a>
+<a href="/users/<%= user.id %>/edit">Edit</a>
+<form action="users/<%= user.id %>" method="post">
+	<input type="hidden" name="_method" value="delete">
+	<input type="submit" name="submit" value="Destroy">
+</form>
+<% end %>

@@ -1,0 +1,14 @@
+<h1>Products#new</h1>
+<p>Find me in app/views/products/new.html.erb</p>
+<form action="/products" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<input type="text" name="product[name]" placeholder="Name">
+	<select name="product[category]">
+		<% @category.each do |c| %>
+		<option value="<%= c.id %>"><%= c.name %></option>
+		<% end %>
+	</select>
+	<input type="text" name="product[description]" placeholder="Description">
+	<input type="text" name="product[pricing]" placeholder="Pricing">
+	<input type="submit" name="submit" value="Add New Product">
+</form>

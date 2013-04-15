@@ -1,0 +1,26 @@
+<h1>Create a new Account</h1>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <%= simple_form_for @user do |f| %>
+   <%= f.input :first_name %>
+   <%= f.input :last_name %>
+   <%= f.input :email_address %>
+   <%= f.button :submit %>
+ <% end %>
+ <!-- HTML FORM -->
+<!-- <form action="/users" method="post">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <input type="text" name="user[first_name]" placeholder="First Name" />
+  <input type="text" name="user[last_name]" placeholder="Last Name" />
+  <input type="text" name="user[email_address]" placeholder="Email" />
+  <input type="submit" value="Create Account" />
+</form> -->

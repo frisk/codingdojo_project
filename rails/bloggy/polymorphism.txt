@@ -1,0 +1,42 @@
+
+# generate model
+rails generate model Comment content:string reference:commentable
+
+# modify the Comment migration file to allow for polymorphism
+t.references :commentable, :polymorphic => true 
+
+# make commentable available in necessary models
+has_many :comments, :as => :commentable
+
+# create 
+User.first.comments.create(:content => "Hey whats up!").errors.full_messages
+
+Blog.find(15).comments.create(:content => "Hey whats up! This is a blog comment").errors.full_messages
+
+Post.last.comments.create(:content => "Hey whats up! This is a post comment").errors.full_messages
+
+Message.first.comments.create(:content => "Hey whats up! This is a message comment").errors.full_messages
+
+# delete
+User.first.comments.destroy_all
+Blog.find(15).comments.destroy_all
+Post.last.comments.destroy_all
+Message.first.comments.destroy_all
+
+#update
+
+ud = User.first.comments.first
+ud.content = "this user comment has been updated"
+ud.save
+
+ud = Post.first.comments.first
+ud.content = "this post comment has been updated"
+ud.save
+
+ud = Blog.first.comments.first
+ud.content = "this blog comment has been updated"
+ud.save
+
+ud = Message.first.comments.first
+ud.content = "this message comment has been updated"
+ud.save

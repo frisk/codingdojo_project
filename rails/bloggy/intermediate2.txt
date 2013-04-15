@@ -1,0 +1,50 @@
+Implement the following validations
+
+require the presence of name and description for the blog
+
+require the presence of title and content for the posts, 
+
+require the title to be at least 7 characters long
+
+require author and message for the messages. Require the 
+message to be at least 15 characters long.
+
+
+Using the console
+
+# create 10 new blogs
+# create several posts for each blog
+# create several messages for the first blog
+# know how to retrieve all the messages for the first blog
+
+Message.joins(:post => :blog).where(:posts => {:blog_id => 1}).all
+
+# know how to retrieve all posts for the first blog
+
+Blog.first.posts.all
+
+# know how to retrieve all posts for the last blog (sorted by title in the DESC order)
+
+Blog.last.posts.order("title DESC")
+
+# know how to update the first post's title
+
+k = Post.first
+k.title = "Rock of Ages"
+k.save
+
+# know how to delete the third post (have the model 
+automatically delete all messages associated with the third post when you delete the third post)
+
+Post.find(3).destroy
+:has_many :posts, :dependent => :destroy
+
+know how to retrieve all blogs
+
+Blog.all
+
+know how to retrieve all blogs whose id is less than 10
+
+Blog.where("id < 10")
+
+think of other potential information you may need for this application and get comfortable being able to pull information using the console

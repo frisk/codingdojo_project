@@ -1,0 +1,91 @@
+# create project in mysql
+rails new user_login_project -d mysql
+
+# update each database parameters in /project/config/database.yml
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: user_login_project_test
+  pool: 5
+  username: root
+  password: "Slalom#6"
+  host: 127.0.0.1
+  socket: /tmp/mysql.sock
+
+# instantiate model
+rails db:create
+
+# create your models
+
+#dojos
+rails generate model Dojo name:string city:string state:string 
+
+#ninjas
+rails generate model Ninja first_name:string last_name:string 
+
+# make sure to set your state type to only 2 characters
+class CreateDojos < ActiveRecord::Migration
+  def change
+    create_table :dojos do |t|
+      t.string :name
+      t.string :city
+      t.string :state, :limit => 2
+
+      t.timestamps
+    end
+  end
+end
+
+#validate the Dojo Model & make sure it has many Ninjas
+class Dojo < ActiveRecord::Base
+  has_many :ninjas
+  attr_accessible :city, :name, :state
+  validates :name, :city, :state :presence => true
+  validates :state, :length => { :minimum => 2}
+end
+
+#validate the Ninja Model & make sure it belongs to Dojos
+class Ninja < ActiveRecord::Base
+  belongs_to :dojos
+  attr_accessible :dojo, :first_name, :last_name
+  validates :first_name, :last_name :presence => true
+end
+
+# migrate the database
+rake db:migrate
+
+# go into rails console
+rails console
+
+#create 3 dojos. Same command with different names for each.
+Dojo.create(:name => "CodingDojo Silicon Valley", :city => "Mountain View", :state => "CA")
+
+#delete all 3 dojos
+Dojo.destroy_all
+
+#create ninjas for first, second and third dojo records. Same command, but different names for each
+Dojo.first.ninjas.create(:first_name => "Randall", :last_name => "Frisk")
+Dojo.find(5).ninjas.create(:first_name => "Randall", :last_name => "Frisk")
+Dojo.last.ninjas.create(:first_name => "Miles", :last_name => "Fink")
+
+#find all the ninjas for the last dojo inserted
+Dojo.last.ninjas.all
+
+#find all the ninjas with a dojo_id = 5 inserted
+Dojo.find(5).ninjas.all
+
+#find all the ninjas for the first dojo inserted
+Dojo.first.ninjas.all
+
+#retrieve ninja first_names in desc order with dojo_id = 5 
+Dojo.find(5).ninjas.select(:first_name).order("created_at DESC")
+
+
+
+
+
+
+
+
+

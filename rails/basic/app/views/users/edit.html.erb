@@ -1,0 +1,28 @@
+<h1>Edit your account</h1>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= simple_form_for @user do |f| %>
+   <%= f.input :first_name %>
+   <%= f.input :last_name %>
+   <%= f.input :email_address %>
+   <%= f.button :submit %>
+ <% end %>
+ <!-- HTML FORM -->
+<!-- <form action="/users/<%= @user.id %>" method="post">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <input type="text" name="user[first_name]" value="<%= @user.first_name %>"/>
+  <input type="text" name="user[last_name]" value="<%= @user.last_name %>" />
+  <input type="text" name="user[email_address]" value="<%= @user.email_address %>" />
+  <input type="hidden" name="_method" value="put">
+  <input type="submit" value="Update Account" />
+
+</form> -->
